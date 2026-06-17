@@ -12,13 +12,17 @@ const createPatientSchema = Joi.object({
   cccd: Joi.string().pattern(/^[0-9]{12}$/).allow(null, '').messages({
     'string.pattern.base': 'CCCD phải chứa chính xác 12 chữ số.'
   }),
-  ngaySinh: Joi.date().iso().allow(null, '').messages({
+  ngaySinh: Joi.date().iso().required().messages({
+    'any.required': 'Ngày sinh là bắt buộc.',
     'date.format': 'Ngày sinh không đúng định dạng YYYY-MM-DD.'
   }),
   gioiTinh: Joi.string().valid('Nam', 'Nu', 'Khac').allow(null, '').messages({
     'any.only': 'Giới tính phải là Nam, Nu hoặc Khac.'
   }),
-  diaChi: Joi.string().max(255).allow(null, ''),
+  diaChi: Joi.string().max(255).required().messages({
+    'any.required': 'Địa chỉ là bắt buộc.',
+    'string.empty': 'Địa chỉ không được để trống.'
+  }),
   tienSuDiUng: Joi.string().allow(null, '')
 });
 
@@ -32,13 +36,13 @@ const updatePatientSchema = Joi.object({
   cccd: Joi.string().pattern(/^[0-9]{12}$/).allow(null, '').messages({
     'string.pattern.base': 'CCCD phải chứa chính xác 12 chữ số.'
   }),
-  ngaySinh: Joi.date().iso().allow(null, '').messages({
+  ngaySinh: Joi.date().iso().messages({
     'date.format': 'Ngày sinh không đúng định dạng YYYY-MM-DD.'
   }),
   gioiTinh: Joi.string().valid('Nam', 'Nu', 'Khac').allow(null, '').messages({
     'any.only': 'Giới tính phải là Nam, Nu hoặc Khac.'
   }),
-  diaChi: Joi.string().max(255).allow(null, ''),
+  diaChi: Joi.string().max(255),
   tienSuDiUng: Joi.string().allow(null, '')
 });
 

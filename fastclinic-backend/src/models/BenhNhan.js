@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
     },
     ngay_sinh: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      allowNull: false
     },
     gioi_tinh: {
       type: DataTypes.ENUM('Nam', 'Nu', 'Khac'),
@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
     },
     dia_chi: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: false
     },
     tien_su_di_ung: {
       type: DataTypes.TEXT,

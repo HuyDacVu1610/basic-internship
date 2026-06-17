@@ -139,8 +139,8 @@ export const PatientForm = ({ onSelectPatient }) => {
   // Save patient profile (create / update)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!hoTen.trim() || !soDienThoai.trim()) {
-      setMessage({ type: 'error', text: 'Họ tên và Số điện thoại là bắt buộc.' });
+    if (!hoTen.trim() || !soDienThoai.trim() || !ngaySinh || !diaChi.trim()) {
+      setMessage({ type: 'error', text: 'Họ tên, Số điện thoại, Ngày sinh và Địa chỉ là bắt buộc.' });
       return;
     }
 
@@ -304,12 +304,13 @@ export const PatientForm = ({ onSelectPatient }) => {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">Ngày sinh</label>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">Ngày sinh *</label>
                 <input
                   type="date"
                   value={ngaySinh}
                   onChange={(e) => setNgaySinh(e.target.value)}
                   className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 text-slate-800"
+                  required
                 />
               </div>
               <div>
@@ -327,13 +328,14 @@ export const PatientForm = ({ onSelectPatient }) => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">Địa chỉ</label>
+              <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">Địa chỉ *</label>
               <input
                 type="text"
                 value={diaChi}
                 onChange={(e) => setDiaChi(e.target.value)}
                 placeholder="Nhập số nhà, tên đường, xã/phường, quận/huyện..."
                 className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 text-slate-800"
+                required
               />
             </div>
 

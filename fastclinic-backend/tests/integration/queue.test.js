@@ -48,12 +48,16 @@ describe('Queue REST API Endpoints', () => {
     testPatient1 = await BenhNhan.create({
       ho_ten: 'Bệnh Nhân Một',
       so_dien_thoai: '0987654321',
+      ngay_sinh: '1990-01-01',
+      dia_chi: 'Hà Nội',
       is_active: true
     });
 
     testPatient2 = await BenhNhan.create({
       ho_ten: 'Bệnh Nhân Hai',
       so_dien_thoai: '0912345678',
+      ngay_sinh: '1990-01-01',
+      dia_chi: 'Hà Nội',
       is_active: true
     });
 

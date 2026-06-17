@@ -95,12 +95,19 @@ export const NurseDashboard = () => {
     setSelectedVisit(null);
   };
 
-  // Form submission
+    // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setFormError('');
     setFormSuccess('');
+
+    // Pre-validate all fields are filled
+    if (!huyetAp || !nhipTim || !nhietDo || !chieuCao || !canNang) {
+      setFormError('Vui lòng nhập đầy đủ tất cả các chỉ số sinh hiệu.');
+      setSubmitting(false);
+      return;
+    }
 
     // Pre-validate format and clinical ranges of blood pressure if entered
     if (huyetAp) {
@@ -387,7 +394,9 @@ export const NurseDashboard = () => {
 
                 {/* Heart Rate Input */}
                 <div className="grid grid-cols-3 items-center gap-4">
-                  <label htmlFor="nhipTim" className="text-sm font-bold text-slate-700">Nhịp tim</label>
+                  <label htmlFor="nhipTim" className="text-sm font-bold text-slate-700">
+                    Nhịp tim <span className="text-red-500">*</span>
+                  </label>
                   <div className="col-span-2">
                     <input 
                       type="number" 
@@ -398,6 +407,7 @@ export const NurseDashboard = () => {
                       min="30"
                       max="200"
                       className="w-full px-4 py-2 bg-white border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 rounded-xl text-sm text-slate-800 focus:outline-none transition font-mono"
+                      required
                     />
                     <span className="text-[10px] text-slate-400 mt-1 block">Đơn vị: lần/phút (Khoảng hợp lệ: 30 - 200)</span>
                   </div>
@@ -405,7 +415,9 @@ export const NurseDashboard = () => {
 
                 {/* Temperature Input */}
                 <div className="grid grid-cols-3 items-center gap-4">
-                  <label htmlFor="nhietDo" className="text-sm font-bold text-slate-700">Nhiệt độ</label>
+                  <label htmlFor="nhietDo" className="text-sm font-bold text-slate-700">
+                    Nhiệt độ <span className="text-red-500">*</span>
+                  </label>
                   <div className="col-span-2">
                     <input 
                       type="number" 
@@ -417,6 +429,7 @@ export const NurseDashboard = () => {
                       min="30"
                       max="45"
                       className="w-full px-4 py-2 bg-white border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 rounded-xl text-sm text-slate-800 focus:outline-none transition font-mono"
+                      required
                     />
                     <span className="text-[10px] text-slate-400 mt-1 block">Đơn vị: °C (Khoảng hợp lệ: 30.0 - 45.0)</span>
                   </div>
@@ -424,7 +437,9 @@ export const NurseDashboard = () => {
 
                 {/* Height Input */}
                 <div className="grid grid-cols-3 items-center gap-4">
-                  <label htmlFor="chieuCao" className="text-sm font-bold text-slate-700">Chiều cao</label>
+                  <label htmlFor="chieuCao" className="text-sm font-bold text-slate-700">
+                    Chiều cao <span className="text-red-500">*</span>
+                  </label>
                   <div className="col-span-2">
                     <input 
                       type="number" 
@@ -436,6 +451,7 @@ export const NurseDashboard = () => {
                       min="30"
                       max="250"
                       className="w-full px-4 py-2 bg-white border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 rounded-xl text-sm text-slate-800 focus:outline-none transition font-mono"
+                      required
                     />
                     <span className="text-[10px] text-slate-400 mt-1 block">Đơn vị: cm (Khoảng hợp lệ: 30 - 250)</span>
                   </div>
@@ -443,7 +459,9 @@ export const NurseDashboard = () => {
 
                 {/* Weight Input */}
                 <div className="grid grid-cols-3 items-center gap-4">
-                  <label htmlFor="canNang" className="text-sm font-bold text-slate-700">Cân nặng</label>
+                  <label htmlFor="canNang" className="text-sm font-bold text-slate-700">
+                    Cân nặng <span className="text-red-500">*</span>
+                  </label>
                   <div className="col-span-2">
                     <input 
                       type="number" 
@@ -455,6 +473,7 @@ export const NurseDashboard = () => {
                       min="1"
                       max="500"
                       className="w-full px-4 py-2 bg-white border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 rounded-xl text-sm text-slate-800 focus:outline-none transition font-mono"
+                      required
                     />
                     <span className="text-[10px] text-slate-400 mt-1 block">Đơn vị: kg (Khoảng hợp lệ: 1.0 - 500.0)</span>
                   </div>

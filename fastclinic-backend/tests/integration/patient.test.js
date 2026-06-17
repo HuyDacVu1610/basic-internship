@@ -60,7 +60,9 @@ describe('Patient REST API Endpoints', () => {
         .set('Authorization', `Bearer ${doctorToken}`)
         .send({
           hoTen: 'Bệnh Nhân Mới',
-          soDienThoai: '0123456789'
+          soDienThoai: '0123456789',
+          ngaySinh: '1990-01-01',
+          diaChi: 'Hà Nội'
         })
         .expect(403);
 
@@ -143,7 +145,9 @@ describe('Patient REST API Endpoints', () => {
         .set('Authorization', `Bearer ${receptionistToken}`)
         .send({
           hoTen: 'Trùng Điện Thoại',
-          soDienThoai: '0987654321'
+          soDienThoai: '0987654321',
+          ngaySinh: '1990-01-01',
+          diaChi: 'Hà Nội'
         })
         .expect(409);
 

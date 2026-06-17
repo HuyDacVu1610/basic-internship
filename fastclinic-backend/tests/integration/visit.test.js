@@ -105,6 +105,8 @@ describe('Visit REST API Endpoints (Vital Signs)', () => {
     testPatient = await BenhNhan.create({
       ho_ten: 'Bệnh Nhân Nhi',
       so_dien_thoai: '0123456789',
+      ngay_sinh: '2020-01-01',
+      dia_chi: 'Hà Nội',
       is_active: true
     });
 
@@ -207,6 +209,23 @@ describe('Visit REST API Endpoints (Vital Signs)', () => {
           nhietDo: 28.0, // invalid temperature (too low)
           chieuCao: 165.0,
           canNang: 55.0
+        })
+        .expect(400);
+
+      expect(res.body.success).toBe(false);
+      expect(res.body.error.code).toBe('VALIDATION_ERROR');
+    });
+
+    it('should reject requests with missing/blank vital signs fields and return 400', async () => {
+      const res = await request(app)
+        .post(`/api/visits/${testLuotKham.ma_luot_kham}/vital-signs`)
+        .set('Authorization', `Bearer ${nurseToken}`)
+        .send({
+          huyetAp: '',
+          nhipTim: null,
+          nhietDo: 36.5,
+          chieuCao: 165.0,
+          canNang: null
         })
         .expect(400);
 

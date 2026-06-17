@@ -9,23 +9,23 @@ module.exports = (sequelize) => {
     },
     huyet_ap: {
       type: DataTypes.STRING(10),
-      allowNull: true
+      allowNull: false
     },
     nhip_tim: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     },
     nhiet_do: {
       type: DataTypes.DECIMAL(3, 1),
-      allowNull: true
+      allowNull: false
     },
     chieu_cao: {
       type: DataTypes.DECIMAL(5, 1),
-      allowNull: true
+      allowNull: false
     },
     can_nang: {
       type: DataTypes.DECIMAL(5, 1),
-      allowNull: true
+      allowNull: false
     },
     thoi_gian_do: {
       type: DataTypes.DATE,

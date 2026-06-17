@@ -93,8 +93,8 @@ describe('Sequelize Database Models', () => {
     
     const p1 = await db.PhongKham.create({ ten_phong: 'P01', trang_thai: 'HOAT_DONG' });
     const n1 = await db.NhanVien.create({ ho_ten: 'NV', vai_tro: 'LE_TAN', ten_dang_nhap: 'nv1', mat_khau_hash: 'pwd' });
-    const b1 = await db.BenhNhan.create({ ho_ten: 'BN1', so_dien_thoai: '0111111111' });
-    const b2 = await db.BenhNhan.create({ ho_ten: 'BN2', so_dien_thoai: '0222222222' });
+    const b1 = await db.BenhNhan.create({ ho_ten: 'BN1', so_dien_thoai: '0111111111', ngay_sinh: '1990-01-01', dia_chi: 'Hà Nội' });
+    const b2 = await db.BenhNhan.create({ ho_ten: 'BN2', so_dien_thoai: '0222222222', ngay_sinh: '1990-01-01', dia_chi: 'Hà Nội' });
 
     // First ticket: STT 1
     await db.PhieuKham.create({

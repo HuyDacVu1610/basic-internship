@@ -64,8 +64,8 @@ describe('Reports & Statistics API (UC-012)', () => {
       ma_benh_nhan: 1,
       ho_ten: 'Bệnh Nhân A',
       so_dien_thoai: '0901234567',
-      gioi_tinh: 'NAM',
-      nam_sinh: 1990,
+      gioi_tinh: 'Nam',
+      ngay_sinh: '1990-01-01',
       dia_chi: 'Hà Nội'
     });
 
@@ -73,8 +73,8 @@ describe('Reports & Statistics API (UC-012)', () => {
       ma_benh_nhan: 2,
       ho_ten: 'Bệnh Nhân B',
       so_dien_thoai: '0907654321',
-      gioi_tinh: 'NU',
-      nam_sinh: 1995,
+      gioi_tinh: 'Nu',
+      ngay_sinh: '1995-01-01',
       dia_chi: 'Đà Nẵng'
     });
 

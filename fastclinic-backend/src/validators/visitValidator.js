@@ -1,8 +1,7 @@
 const Joi = require('joi');
 
 const vitalSignsSchema = Joi.object({
-  huyetAp: Joi.string().pattern(/^\d{2,3}\/\d{2,3}$/).allow(null, '').custom((value, helpers) => {
-    if (!value) return value;
+  huyetAp: Joi.string().pattern(/^\d{2,3}\/\d{2,3}$/).required().custom((value, helpers) => {
     const [sys, dia] = value.split('/').map(Number);
     if (sys < 50 || sys > 250) {
       return helpers.message('Huyết áp tâm thu không hợp lệ (từ 50 đến 250 mmHg).');
@@ -15,24 +14,30 @@ const vitalSignsSchema = Joi.object({
     }
     return value;
   }).messages({
+    'any.required': 'Huyết áp là bắt buộc.',
+    'string.empty': 'Huyết áp không được để trống.',
     'string.pattern.base': 'Huyết áp phải có định dạng chuẩn (ví dụ: 120/80).'
   }),
-  nhipTim: Joi.number().integer().min(30).max(200).allow(null).messages({
+  nhipTim: Joi.number().integer().min(30).max(200).required().messages({
+    'any.required': 'Nhịp tim là bắt buộc.',
     'number.base': 'Nhịp tim phải là số nguyên.',
     'number.min': 'Nhịp tim không hợp lệ (thấp nhất 30).',
     'number.max': 'Nhịp tim không hợp lệ (cao nhất 200).'
   }),
-  nhietDo: Joi.number().min(30.0).max(45.0).allow(null).messages({
+  nhietDo: Joi.number().min(30.0).max(45.0).required().messages({
+    'any.required': 'Nhiệt độ là bắt buộc.',
     'number.base': 'Nhiệt độ phải là số.',
     'number.min': 'Nhiệt độ không hợp lệ (thấp nhất 30.0°C).',
     'number.max': 'Nhiệt độ không hợp lệ (cao nhất 45.0°C).'
   }),
-  chieuCao: Joi.number().min(30.0).max(250.0).allow(null).messages({
+  chieuCao: Joi.number().min(30.0).max(250.0).required().messages({
+    'any.required': 'Chiều cao là bắt buộc.',
     'number.base': 'Chiều cao phải là số.',
     'number.min': 'Chiều cao không hợp lệ (thấp nhất 30.0 cm).',
     'number.max': 'Chiều cao không hợp lệ (cao nhất 250.0 cm).'
   }),
-  canNang: Joi.number().min(1.0).max(500.0).allow(null).messages({
+  canNang: Joi.number().min(1.0).max(500.0).required().messages({
+    'any.required': 'Cân nặng là bắt buộc.',
     'number.base': 'Cân nặng phải là số.',
     'number.min': 'Cân nặng không hợp lệ (thấp nhất 1.0 kg).',
     'number.max': 'Cân nặng không hợp lệ (cao nhất 500.0 kg).'

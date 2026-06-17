@@ -22,6 +22,13 @@ export const DashboardLayout = ({ children, title }) => {
     NV_CLS: 'bg-purple-50 text-purple-700 border-purple-200'
   };
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Bạn có chắc chắn muốn đăng xuất không?");
+    if (confirmLogout) {
+      logout();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
       {/* Top Header */}
@@ -46,7 +53,7 @@ export const DashboardLayout = ({ children, title }) => {
             </span>
             <div className="h-6 w-px bg-slate-200" />
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="text-xs font-bold text-slate-600 hover:text-rose-600 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-rose-200 hover:bg-rose-50 transition duration-150"
             >
               Đăng xuất
@@ -76,7 +83,7 @@ export const DashboardLayout = ({ children, title }) => {
 
       {/* Footer */}
       <footer className="bg-slate-100/50 border-t border-slate-200/60 py-4 text-center text-xs text-slate-500">
-        <p>&copy; {new Date().getFullYear()} Nhóm 21 - Báo cáo Thực tập Cơ sở. Tất cả quyền được bảo lưu.</p>
+        <p>&copy; {new Date().getFullYear()} Tất cả quyền được bảo lưu.</p>
       </footer>
     </div>
   );
