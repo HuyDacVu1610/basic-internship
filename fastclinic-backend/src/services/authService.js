@@ -84,7 +84,6 @@ class AuthService {
     );
 
     logger.info(`Login success: User ${tenDangNhap} (Role: ${user.vai_tro}) logged in successfully`);
-
     return {
       accessToken,
       refreshToken,
@@ -95,6 +94,61 @@ class AuthService {
         ten_dang_nhap: user.ten_dang_nhap
       }
     };
+  }
+
+  async refresh(refreshToken) {
+    try {
+      const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
+      const decoded = jwt.verify(refreshToken, jwtSecret);
+      
+      const user = await NhanVien.findByPk(decoded.userId);
+      if (!user || !user.is_active) {
+        const err = new Error('Tài khoản không tồn tại hoặc đã bị vô hiệu hóa.');
+        err.statusCode = 401;
+        err.code = 'UNAUTHORIZED';
+        throw err;
+      }
+
+      // Check if account is locked
+      if (user.khoa_den && new Date(user.khoa_den) > new Date()) {
+        const err = new Error('Tài khoản hiện đang bị khóa.');
+        err.statusCode = 403;
+        err.code = 'ACCOUNT_LOCKED';
+        throw err;
+      }
+
+      // Generate new tokens
+      const newAccessToken = jwt.sign(
+        { userId: user.ma_nhan_vien, role: user.vai_tro, username: user.ten_dang_nhap },
+        jwtSecret,
+        { expiresIn: process.env.JWT_ACCESS_EXPIRATION || '1h' }
+      );
+
+      const newRefreshToken = jwt.sign(
+        { userId: user.ma_nhan_vien },
+        jwtSecret,
+        { expiresIn: process.env.JWT_REFRESH_EXPIRATION || '7d' }
+      );
+
+      return {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+        user: {
+          ma_nhan_vien: user.ma_nhan_vien,
+          ho_ten: user.ho_ten,
+          vai_tro: user.vai_tro,
+          ten_dang_nhap: user.ten_dang_nhap
+        }
+      };
+    } catch (error) {
+      if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+        const err = new Error('Refresh token không hợp lệ hoặc đã hết hạn.');
+        err.statusCode = 401;
+        err.code = 'UNAUTHORIZED';
+        throw err;
+      }
+      throw error;
+    }
   }
 }
 

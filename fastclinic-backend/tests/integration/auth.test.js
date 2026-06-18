@@ -110,4 +110,59 @@ describe('Auth REST API Endpoints', () => {
       expect(checkRes.body.error.code).toBe('ACCOUNT_LOCKED');
     });
   });
+
+  describe('POST /api/auth/refresh & POST /api/auth/logout', () => {
+    let cookie;
+
+    beforeEach(async () => {
+      const res = await request(app)
+        .post('/api/auth/login')
+        .send({ tenDangNhap: 'bsnguyenvana', matKhau: 'Password@123' })
+        .expect(200);
+      
+      cookie = res.headers['set-cookie'];
+    });
+
+    it('should return 200 and new accessToken when refresh token is valid', async () => {
+      const res = await request(app)
+        .post('/api/auth/refresh')
+        .set('Cookie', cookie)
+        .expect(200);
+
+      expect(res.body.success).toBe(true);
+      expect(res.body.data).toHaveProperty('accessToken');
+      expect(res.headers['set-cookie']).toBeDefined();
+    });
+
+    it('should return 401 when refresh token is missing', async () => {
+      const res = await request(app)
+        .post('/api/auth/refresh')
+        .expect(401);
+
+      expect(res.body.success).toBe(false);
+      expect(res.body.error.code).toBe('UNAUTHORIZED');
+    });
+
+    it('should return 401 when refresh token is invalid', async () => {
+      const res = await request(app)
+        .post('/api/auth/refresh')
+        .set('Cookie', ['refreshToken=invalidtokenhere'])
+        .expect(401);
+
+      expect(res.body.success).toBe(false);
+      expect(res.body.error.code).toBe('UNAUTHORIZED');
+    });
+
+    it('should clear refresh token cookie on logout', async () => {
+      const res = await request(app)
+        .post('/api/auth/logout')
+        .expect(200);
+
+      expect(res.body.success).toBe(true);
+      const cookies = res.headers['set-cookie'];
+      expect(cookies).toBeDefined();
+      const hasCleared = cookies.some(c => c.includes('refreshToken=;'));
+      expect(hasCleared).toBe(true);
+    });
+  });
 });

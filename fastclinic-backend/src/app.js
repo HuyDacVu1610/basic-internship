@@ -2,12 +2,15 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 const loggerMiddleware = require('./middlewares/loggerMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const routes = require('./routes');
 
 const app = express();
+
+app.use(cookieParser());
 
 // Security Middlewares
 app.use(helmet({
